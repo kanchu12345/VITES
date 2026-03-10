@@ -1749,3 +1749,166 @@ footer {
     -webkit-text-fill-color: transparent;
     font-weight: 800;
 }
+
+/* RESPONSIVE MEDIA QUERIES */
+
+/* For smaller tablets and mobile devices */
+@media (max-width: 991px) {
+    .navbar-brand img {
+        height: 80px;
+        margin: -10px 0;
+    }
+    .hero-title {
+        font-size: clamp(2.5rem, 5vw, 3.5rem) !important;
+    }
+    .page-hero h1 {
+        font-size: clamp(2rem, 5vw, 3rem) !important;
+    }
+    .hero-sub {
+        font-size: 0.95rem !important;
+        margin-bottom: 24px;
+    }
+    .btn-hero-primary, .btn-hero-outline {
+        padding: 12px 28px;
+        font-size: 0.85rem;
+    }
+    .ticker-text {
+        font-size: 0.75rem;
+    }
+    
+    .cat-overlay-men, .cat-overlay-women, .cat-overlay-kids {
+        padding: 20px;
+    }
+    .category-card h3 {
+        font-size: 1.8rem;
+    }
+    
+    .contact-info-card {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .stat-num {
+        font-size: 2.2rem;
+    }
+    .section-heading {
+        font-size: clamp(1.8rem, 4vw, 2.5rem) !important;
+    }
+    .product-card, .na-card {
+        margin-bottom: 15px;
+    }
+    .premium-footer {
+        text-align: center;
+    }
+    .footer-social-links {
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+    .contact-item {
+        justify-content: center;
+    }
+    .footer-brand {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    .category-card img {
+        height: 300px;
+    }
+    .card-img-wrap img {
+        height: 250px;
+    }
+    .feature-card, .val-card {
+        padding: 20px 10px;
+    }
+    .f-icon, .val-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.4rem;
+        margin-bottom: 15px;
+    }
+    .whatsapp-float {
+        width: 50px;
+        height: 50px;
+        bottom: 20px;
+        right: 20px;
+        font-size: 28px;
+    }
+}
+
+@media (max-width: 576px) {
+    .navbar-brand img {
+        height: 60px;
+        margin: 0;
+        margin-right: 5px;
+    }
+    .navbar-brand .txt-brand-gradient {
+        font-size: 1.2rem !important;
+    }
+    .hero-section {
+        height: 80vh;
+    }
+    #heroCarousel .carousel-item img {
+        height: 80vh;
+    }
+    .hero-title {
+        font-size: clamp(2rem, 6vw, 2.5rem) !important;
+    }
+    .hero-badge {
+        font-size: 0.65rem;
+        padding: 6px 16px;
+    }
+    .ticker-text {
+        font-size: 0.65rem;
+    }
+    .d-flex.justify-content-center.gap-3.flex-wrap {
+        flex-direction: column;
+        gap: 10px !important;
+        align-items: stretch;
+    }
+    .btn-hero-primary, .btn-hero-outline, .hero-section .btn {
+        width: 100%;
+        margin-bottom: 0px;
+        text-align: center;
+        justify-content: center;
+    }
+    .stats-section .row > div {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+    .features-section .row > div {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+    /* Fixed spacing for 2-column mobile grid */
+    .featured-section .col-6, .new-arrivals-section .col-6, .products-section .col-6 {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+    .row.g-3 {
+        margin-left: -5px;
+        margin-right: -5px;
+    }
+    .card-img-wrap img {
+        height: 180px;
+    }
+    .category-card img {
+        height: 250px;
+    }
+    .p-name, .na-name {
+        font-size: 0.9rem;
+    }
+    .p-price, .na-price {
+        font-size: 1.1rem;
+    }
+    .btn-order {
+        padding: 8px 10px;
+        font-size: 0.75rem;
+        width: 100%;
+    }
+    .product-info, .na-info {
+        padding: 0 10px 15px;
+    }
+}
