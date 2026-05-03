@@ -616,25 +616,31 @@
 
         async function initStore() {
             try {
-                // Fetch settings
+                // Fetch settings limit
                 let limit = 3;
                 try {
                     const settingsDoc = await db.collection('settings').doc('homepage').get();
                     if (settingsDoc.exists && settingsDoc.data().limit) {
                         limit = settingsDoc.data().limit;
                     }
-                } catch(e) { console.log('Settings not found, using default limit'); }
+                } catch(e) {}
 
                 const snapshot = await db.collection('products').get();
                 const products = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
+                if (products.length === 0) return; // nothing to show
+
                 // Sort by latest first
                 products.sort((a, b) => (b.updatedAt?.seconds || 0) - (a.updatedAt?.seconds || 0));
 
-                const featuredItems = products.filter(p => p.isFeatured).slice(0, limit);
+                // Featured: prefer isFeatured=true, fallback to first N products
+                let featuredItems = products.filter(p => p.isFeatured).slice(0, limit);
+                if (featuredItems.length === 0) featuredItems = products.slice(0, limit);
                 document.getElementById('featuredProductsGrid').innerHTML = featuredItems.map((p, i) => createCard(p, i)).join('');
 
-                const newItems = products.filter(p => p.isNew).slice(0, limit);
+                // New Arrivals: prefer isNew=true, fallback to next N products
+                let newItems = products.filter(p => p.isNew).slice(0, limit);
+                if (newItems.length === 0) newItems = products.slice(0, limit);
                 document.getElementById('newArrivalsGrid').innerHTML = newItems.map((p, i) => createCard(p, i, true)).join('');
             } catch (error) {
                 console.error("Error loading products:", error);
