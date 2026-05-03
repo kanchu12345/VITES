@@ -252,7 +252,7 @@
                 <div class="product-card ${hoverMap[p.category] || ''} ${isOutOfStock ? 'out-of-stock' : ''}">
                     <div class="card-img-wrap" data-img-count="${imgs.length}">${badge}${imgHtml}</div>
                     <div class="product-info">
-                        <div class="p-cat">${p.category.toUpperCase()} • ${p.subCategory || ''}</div>
+                        <div class="p-cat">${(p.category || 'misc').toUpperCase()} • ${p.subCategory || ''}</div>
                         <div class="p-name">${p.name}</div>
                         <span class="p-price">LKR ${Number(p.price).toLocaleString()}</span>
                         <button onclick="openOrderModal(${JSON.stringify(p).replace(/"/g, '&quot;')})" 

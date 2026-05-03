@@ -512,7 +512,8 @@
             const oosClass = isOutOfStock ? 'out-of-stock' : '';
             const cardClass = isNA ? 'na-card' : `product-card ${hoverCls}`;
             const infoClass = isNA ? 'na-info' : 'product-info';
-            const catClass = isNA ? `na-cat ${p.category === 'men' ? 'm' : p.category === 'women' ? 'w' : 'k'}` : 'p-cat';
+            const safeCatStr = p.category ? p.category.toLowerCase() : '';
+            const catClass = isNA ? `na-cat ${safeCatStr === 'men' ? 'm' : safeCatStr === 'women' ? 'w' : 'k'}` : 'p-cat';
 
             let imgHtml = '';
             const imgs = p.images && p.images.length > 0 ? p.images : [p.image || 'img/f1.jpg'];
@@ -531,7 +532,7 @@
                         ${imgHtml}
                     </div>
                     <div class="${infoClass}">
-                        <div class="${catClass}">${p.category.toUpperCase()} • ${p.subCategory || ''}</div>
+                        <div class="${catClass}">${(p.category || 'misc').toUpperCase()} • ${p.subCategory || ''}</div>
                         <div class="${isNA ? 'na-name' : 'p-name'}">${p.name}</div>
                         <span class="${isNA ? 'na-price' : 'p-price'}">LKR ${Number(p.price).toLocaleString()}</span>
                         <button onclick="openOrderModal(${JSON.stringify(p).replace(/"/g, '&quot;')})" 
