@@ -194,9 +194,12 @@
     </section>
 
     <!-- FEATURED PRODUCTS -->
-    <section class="featured-section">
+    <section class="featured-section" style="overflow:hidden;">
+        <!-- Ambient orbs -->
+        <div class="orb-bg orb-gold"></div>
+        <div class="orb-bg orb-rose"></div>
         <div class="container position-relative" style="z-index:1;">
-            <div class="d-flex justify-content-between align-items-end mb-5 flex-wrap gap-3">
+            <div class="d-flex justify-content-between align-items-end mb-5 flex-wrap gap-3 reveal">
                 <div>
                     <span class="eyebrow gold">✦ Handpicked For You</span>
                     <h2 class="section-heading">Featured Products</h2>
@@ -205,21 +208,32 @@
                 <a href="products.html" class="btn-hero-primary" style="padding:12px 32px;font-size:0.9rem;">View All <i
                         class="fas fa-arrow-right ms-1"></i></a>
             </div>
-            <div class="row g-3" id="featuredProductsGrid"></div>
+            <div class="row g-3 stagger-children" id="featuredProductsGrid">
+                <!-- Skeleton loaders -->
+                <div class="col-6 col-md-4 skeleton-card"><div class="skeleton-img"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div><div class="skeleton-line btn"></div></div>
+                <div class="col-6 col-md-4 skeleton-card"><div class="skeleton-img"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div><div class="skeleton-line btn"></div></div>
+                <div class="col-6 col-md-4 skeleton-card d-none d-md-block"><div class="skeleton-img"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div><div class="skeleton-line btn"></div></div>
+            </div>
         </div>
     </section>
 
     <!-- NEW ARRIVALS -->
-    <section class="new-arrivals-section">
-        <div class="container">
-            <div class="text-center mb-5">
+    <section class="new-arrivals-section" style="overflow:hidden;">
+        <div class="orb-bg orb-purple" style="top:-60px;right:10%;"></div>
+        <div class="container position-relative" style="z-index:1;">
+            <div class="text-center mb-5 reveal">
                 <span class="eyebrow purple">✦ JUST IN</span>
                 <h2 class="section-heading">New Arrivals</h2>
                 <div class="color-bar purple"></div>
                 <p class="text-muted mt-3 small">Fresh styles added every week</p>
             </div>
-            <div class="row g-3" id="newArrivalsGrid"></div>
-            <div class="text-center mt-5">
+            <div class="row g-3 stagger-children" id="newArrivalsGrid">
+                <!-- Skeleton loaders -->
+                <div class="col-6 col-md-4 skeleton-card"><div class="skeleton-img"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div><div class="skeleton-line btn"></div></div>
+                <div class="col-6 col-md-4 skeleton-card"><div class="skeleton-img"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div><div class="skeleton-line btn"></div></div>
+                <div class="col-6 col-md-4 skeleton-card d-none d-md-block"><div class="skeleton-img"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div><div class="skeleton-line btn"></div></div>
+            </div>
+            <div class="text-center mt-5 reveal">
                 <a href="new-arrivals.html" class="btn-hero-primary">See All New Arrivals <i
                         class="fas fa-arrow-right ms-2"></i></a>
             </div>
@@ -648,6 +662,26 @@
         }
 
         initStore();
+
+        // ── Scroll Reveal ──
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.12 });
+
+        document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .stagger-children').forEach(el => {
+            revealObserver.observe(el);
+        });
+
+        // ── Navbar scroll shadow ──
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('.gold-nav');
+            if (nav) nav.classList.toggle('scrolled', window.scrollY > 40);
+        });
 
     </script>
 </body>
