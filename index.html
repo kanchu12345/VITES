@@ -427,8 +427,7 @@
                         aria-label="Close"></button>
                 </div>
                 <div class="modal-body pt-0 text-center">
-                    <img id="modalProductImg" src="" alt="" class="img-fluid rounded-3 mb-3 shadow-md border-gold"
-                        style="max-height: 250px; object-fit: cover;">
+                    <div id="modalProductImgContainer"></div>
                     <h4 id="modalProductName" class="fw-bold gold-text mb-2">Product Name</h4>
                     <p id="modalProductPrice" class="text-white-50 mb-4">LKR 0.00</p>
 
@@ -515,11 +514,21 @@
             const infoClass = isNA ? 'na-info' : 'product-info';
             const catClass = isNA ? `na-cat ${p.category === 'men' ? 'm' : p.category === 'women' ? 'w' : 'k'}` : 'p-cat';
 
+            let imgHtml = '';
+            const imgs = p.images && p.images.length > 0 ? p.images : [p.image || 'img/f1.jpg'];
+            if (imgs.length > 1) {
+                imgHtml = `<div class="auto-swap-gallery">
+                    ${imgs.map((img, idx) => `<img src="${img}" class="swap-img swap-${idx}" style="animation-delay: ${idx * 3}s;" loading="lazy" onerror="this.onerror=null; this.src='img/f1.jpg';">`).join('')}
+                </div>`;
+            } else {
+                imgHtml = `<img src="${imgs[0]}" loading="lazy" onerror="this.onerror=null; this.src='img/f1.jpg';">`;
+            }
+
             return `<div class="col-6 col-md-3">
                 <div class="${cardClass} ${oosClass}">
-                    <div class="card-img-wrap">
+                    <div class="card-img-wrap" data-img-count="${imgs.length}">
                         ${isNA ? '<span class="prod-badge new">NEW</span>' : badgeHtml}
-                        <img src="${p.image}" alt="${p.name}" onerror="this.onerror=null; this.src='img/f1.jpg';">
+                        ${imgHtml}
                     </div>
                     <div class="${infoClass}">
                         <div class="${catClass}">${p.category.toUpperCase()} • ${p.subCategory || ''}</div>
@@ -537,7 +546,31 @@
 
         function openOrderModal(p) {
             selectedProduct = p;
-            document.getElementById('modalProductImg').src = p.image;
+            
+            const imgs = p.images && p.images.length > 0 ? p.images : [p.image || 'img/f1.jpg'];
+            const modalImgContainer = document.getElementById('modalProductImgContainer');
+            
+            if (imgs.length > 1) {
+                modalImgContainer.innerHTML = `
+                <div id="productCarousel" class="carousel slide mb-3" data-bs-ride="carousel">
+                    <div class="carousel-inner rounded-3 shadow-md border-gold">
+                        ${imgs.map((img, idx) => `
+                            <div class="carousel-item ${idx === 0 ? 'active' : ''}">
+                                <img src="${img}" class="d-block w-100" style="height: 250px; object-fit: cover;" alt="${p.name}">
+                            </div>
+                        `).join('')}
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    </button>
+                </div>`;
+            } else {
+                modalImgContainer.innerHTML = `<img src="${imgs[0]}" alt="${p.name}" class="img-fluid rounded-3 mb-3 shadow-md border-gold" style="height: 250px; width: 100%; object-fit: cover;">`;
+            }
+
             document.getElementById('modalProductName').textContent = p.name;
             document.getElementById('modalProductPrice').textContent = `LKR ${Number(p.price).toLocaleString()}`;
 
@@ -585,19 +618,25 @@
 
         async function initStore() {
             try {
+                // Fetch settings
+                let limit = 3;
+                try {
+                    const settingsDoc = await db.collection('settings').doc('homepage').get();
+                    if (settingsDoc.exists && settingsDoc.data().limit) {
+                        limit = settingsDoc.data().limit;
+                    }
+                } catch(e) { console.log('Settings not found, using default limit'); }
+
                 const snapshot = await db.collection('products').get();
                 const products = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
                 // Sort by latest first
                 products.sort((a, b) => (b.updatedAt?.seconds || 0) - (a.updatedAt?.seconds || 0));
 
-                // If no products in DB yet, use default for display
-                const displayProducts = products.length > 0 ? products : [];
-
-                const featuredItems = products.filter(p => p.isFeatured).slice(0, 3);
+                const featuredItems = products.filter(p => p.isFeatured).slice(0, limit);
                 document.getElementById('featuredProductsGrid').innerHTML = featuredItems.map((p, i) => createCard(p, i)).join('');
 
-                const newItems = products.filter(p => p.isNew).slice(0, 3);
+                const newItems = products.filter(p => p.isNew).slice(0, limit);
                 document.getElementById('newArrivalsGrid').innerHTML = newItems.map((p, i) => createCard(p, i, true)).join('');
             } catch (error) {
                 console.error("Error loading products:", error);

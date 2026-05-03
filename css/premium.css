@@ -103,6 +103,14 @@ body {
     text-shadow: 0 0 10px rgba(124, 58, 237, 0.2);
 }
 
+.gold-nav .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2815, 15, 30, 0.8%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+}
+
+.gold-nav .navbar-toggler:focus {
+    box-shadow: 0 0 0 0.2rem rgba(212, 175, 55, 0.25);
+}
+
 .btn-admin-login {
     background: var(--grad-gold);
     color: #0a0a12 !important;
@@ -615,10 +623,11 @@ body {
     position: relative;
     margin-bottom: 20px;
     background: transparent;
+    height: 350px;
 }
 
 .card-img-wrap img {
-    height: 350px;
+    height: 100%;
     object-fit: cover;
     width: 100%;
     transition: 0.6s ease;
@@ -628,6 +637,54 @@ body {
 .na-card:hover .card-img-wrap img {
     transform: scale(1.1);
     filter: brightness(1.1);
+}
+
+/* Auto-Swap Gallery */
+.auto-swap-gallery {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.auto-swap-gallery img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+}
+
+.auto-swap-gallery img:first-child {
+    position: relative;
+}
+
+/* Animations based on count */
+.card-img-wrap[data-img-count="2"] .swap-img { animation: swapFade2 6s infinite; }
+.card-img-wrap[data-img-count="3"] .swap-img { animation: swapFade3 9s infinite; }
+.card-img-wrap[data-img-count="4"] .swap-img { animation: swapFade4 12s infinite; }
+.card-img-wrap[data-img-count="5"] .swap-img { animation: swapFade5 15s infinite; }
+
+@keyframes swapFade2 {
+    0%, 40% { opacity: 1; z-index: 2; }
+    50%, 90% { opacity: 0; z-index: 1; }
+    100% { opacity: 1; z-index: 2; }
+}
+
+@keyframes swapFade3 {
+    0%, 25% { opacity: 1; z-index: 2; }
+    33%, 92% { opacity: 0; z-index: 1; }
+    100% { opacity: 1; z-index: 2; }
+}
+
+@keyframes swapFade4 {
+    0%, 18% { opacity: 1; z-index: 2; }
+    25%, 93% { opacity: 0; z-index: 1; }
+    100% { opacity: 1; z-index: 2; }
+}
+
+@keyframes swapFade5 {
+    0%, 15% { opacity: 1; z-index: 2; }
+    20%, 95% { opacity: 0; z-index: 1; }
+    100% { opacity: 1; z-index: 2; }
 }
 
 .prod-badge {
@@ -1817,7 +1874,7 @@ footer {
     .category-card img {
         height: 300px;
     }
-    .card-img-wrap img {
+    .card-img-wrap {
         height: 250px;
     }
     .feature-card, .val-card {
