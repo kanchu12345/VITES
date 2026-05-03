@@ -517,13 +517,10 @@
 
             let imgHtml = '';
             const imgs = p.images && p.images.length > 0 ? p.images : [p.image || 'img/f1.jpg'];
-            if (imgs.length > 1) {
-                imgHtml = `<div class="auto-swap-gallery">
-                    ${imgs.map((img, idx) => `<img src="${img}" class="swap-img swap-${idx}" style="animation-delay: ${idx * 3}s;" loading="lazy" onerror="this.onerror=null; this.src='img/f1.jpg';">`).join('')}
-                </div>`;
-            } else {
-                imgHtml = `<img src="${imgs[0]}" loading="lazy" onerror="this.onerror=null; this.src='img/f1.jpg';">`;
-            }
+            // Always use gallery wrapper — CSS handles single vs multi image display
+            imgHtml = `<div class="auto-swap-gallery">
+                ${imgs.map((img, idx) => `<img src="${img}" class="swap-img swap-${idx}" loading="lazy" onerror="this.onerror=null; this.src='img/f1.jpg';">`).join('')}
+            </div>`;
 
             return `<div class="col-6 col-md-3">
                 <div class="${cardClass} ${oosClass}">

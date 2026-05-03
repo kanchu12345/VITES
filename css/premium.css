@@ -639,52 +639,93 @@ body {
     filter: brightness(1.1);
 }
 
-/* Auto-Swap Gallery */
+/* ===== AUTO-SWAP GALLERY ===== */
 .auto-swap-gallery {
     position: relative;
     width: 100%;
     height: 100%;
+    overflow: hidden;
 }
 
-.auto-swap-gallery img {
+/* All images stacked absolutely, hidden by default */
+.auto-swap-gallery .swap-img {
     position: absolute;
     top: 0;
     left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     opacity: 0;
+    transition: opacity 0.8s ease;
+    animation: none;
 }
 
-.auto-swap-gallery img:first-child {
-    position: relative;
+/* First image always visible initially */
+.auto-swap-gallery .swap-img.swap-0 {
+    animation: imgCycle 12s infinite 0s;
+}
+.auto-swap-gallery .swap-img.swap-1 {
+    animation: imgCycle 12s infinite 4s;
+}
+.auto-swap-gallery .swap-img.swap-2 {
+    animation: imgCycle 15s infinite 5s;
+}
+.auto-swap-gallery .swap-img.swap-3 {
+    animation: imgCycle 20s infinite 5s;
+}
+.auto-swap-gallery .swap-img.swap-4 {
+    animation: imgCycle 25s infinite 5s;
 }
 
-/* Animations based on count */
-.card-img-wrap[data-img-count="2"] .swap-img { animation: swapFade2 6s infinite; }
-.card-img-wrap[data-img-count="3"] .swap-img { animation: swapFade3 9s infinite; }
-.card-img-wrap[data-img-count="4"] .swap-img { animation: swapFade4 12s infinite; }
-.card-img-wrap[data-img-count="5"] .swap-img { animation: swapFade5 15s infinite; }
-
-@keyframes swapFade2 {
-    0%, 40% { opacity: 1; z-index: 2; }
-    50%, 90% { opacity: 0; z-index: 1; }
-    100% { opacity: 1; z-index: 2; }
+/* 2-image cards */
+.card-img-wrap[data-img-count="1"] .swap-img.swap-0 {
+    opacity: 1 !important;
+    animation: none !important;
+    position: relative !important;
 }
+.card-img-wrap[data-img-count="2"] .swap-img.swap-0 { animation: imgCycle2 8s infinite 0s; }
+.card-img-wrap[data-img-count="2"] .swap-img.swap-1 { animation: imgCycle2 8s infinite 4s; }
+.card-img-wrap[data-img-count="3"] .swap-img.swap-0 { animation: imgCycle3 12s infinite 0s; }
+.card-img-wrap[data-img-count="3"] .swap-img.swap-1 { animation: imgCycle3 12s infinite 4s; }
+.card-img-wrap[data-img-count="3"] .swap-img.swap-2 { animation: imgCycle3 12s infinite 8s; }
+.card-img-wrap[data-img-count="4"] .swap-img.swap-0 { animation: imgCycle4 16s infinite 0s; }
+.card-img-wrap[data-img-count="4"] .swap-img.swap-1 { animation: imgCycle4 16s infinite 4s; }
+.card-img-wrap[data-img-count="4"] .swap-img.swap-2 { animation: imgCycle4 16s infinite 8s; }
+.card-img-wrap[data-img-count="4"] .swap-img.swap-3 { animation: imgCycle4 16s infinite 12s; }
+.card-img-wrap[data-img-count="5"] .swap-img.swap-0 { animation: imgCycle5 20s infinite 0s; }
+.card-img-wrap[data-img-count="5"] .swap-img.swap-1 { animation: imgCycle5 20s infinite 4s; }
+.card-img-wrap[data-img-count="5"] .swap-img.swap-2 { animation: imgCycle5 20s infinite 8s; }
+.card-img-wrap[data-img-count="5"] .swap-img.swap-3 { animation: imgCycle5 20s infinite 12s; }
+.card-img-wrap[data-img-count="5"] .swap-img.swap-4 { animation: imgCycle5 20s infinite 16s; }
 
-@keyframes swapFade3 {
-    0%, 25% { opacity: 1; z-index: 2; }
-    33%, 92% { opacity: 0; z-index: 1; }
-    100% { opacity: 1; z-index: 2; }
+/* Keyframes: each image is visible for 3.5s, then fades out */
+@keyframes imgCycle2 {
+    0%       { opacity: 1; z-index: 2; }
+    40%      { opacity: 1; z-index: 2; }
+    50%      { opacity: 0; z-index: 1; }
+    95%      { opacity: 0; z-index: 1; }
+    100%     { opacity: 1; z-index: 2; }
 }
-
-@keyframes swapFade4 {
-    0%, 18% { opacity: 1; z-index: 2; }
-    25%, 93% { opacity: 0; z-index: 1; }
-    100% { opacity: 1; z-index: 2; }
+@keyframes imgCycle3 {
+    0%       { opacity: 1; z-index: 2; }
+    28%      { opacity: 1; z-index: 2; }
+    35%      { opacity: 0; z-index: 1; }
+    95%      { opacity: 0; z-index: 1; }
+    100%     { opacity: 1; z-index: 2; }
 }
-
-@keyframes swapFade5 {
-    0%, 15% { opacity: 1; z-index: 2; }
-    20%, 95% { opacity: 0; z-index: 1; }
-    100% { opacity: 1; z-index: 2; }
+@keyframes imgCycle4 {
+    0%       { opacity: 1; z-index: 2; }
+    22%      { opacity: 1; z-index: 2; }
+    27%      { opacity: 0; z-index: 1; }
+    97%      { opacity: 0; z-index: 1; }
+    100%     { opacity: 1; z-index: 2; }
+}
+@keyframes imgCycle5 {
+    0%       { opacity: 1; z-index: 2; }
+    18%      { opacity: 1; z-index: 2; }
+    22%      { opacity: 0; z-index: 1; }
+    98%      { opacity: 0; z-index: 1; }
+    100%     { opacity: 1; z-index: 2; }
 }
 
 .prod-badge {
