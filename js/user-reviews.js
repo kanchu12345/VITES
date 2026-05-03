@@ -1,3 +1,5 @@
+// Wrapped in IIFE to prevent variable conflicts with main page scripts
+(function() {
 console.log("user-reviews.js initialized");
 // Firebase configuration
 const firebaseConfig = {
@@ -237,3 +239,5 @@ if (btnSubmitReview) {
 }
 
 if (reviewsGrid) loadReviews();
+
+})(); // end IIFE

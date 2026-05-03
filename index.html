@@ -628,7 +628,28 @@
             window.open(waUrl, '_blank');
         });
 
+        // ── Fallback demo products shown while Firebase loads ──
+        const DEMO_PRODUCTS = [
+            { id:'d1', name:'Premium Linen Shirt', category:'men', subCategory:'Office Wear', price:4500, badge:'HOT', status:'In Stock', isFeatured:true, isNew:true,
+              images:['https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&q=80','https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=600&q=80'] },
+            { id:'d2', name:'Midnight Silk Saree', category:'women', subCategory:'Saree', price:12500, badge:'NEW', status:'In Stock', isFeatured:true, isNew:true,
+              images:['https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=600&q=80','https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=600&q=80'] },
+            { id:'d3', name:'Kids Party Frock', category:'kids', subCategory:'Frocks', price:3200, badge:'OFFER', status:'In Stock', isFeatured:true, isNew:true,
+              images:['https://images.unsplash.com/photo-1518831959646-742c3a14ebf7?w=600&q=80'] },
+        ];
+
+        function showFallback() {
+            const fg = document.getElementById('featuredProductsGrid');
+            const ng = document.getElementById('newArrivalsGrid');
+            if (fg) fg.innerHTML = DEMO_PRODUCTS.map((p,i) => createCard(p,i)).join('');
+            if (ng) ng.innerHTML = DEMO_PRODUCTS.map((p,i) => createCard(p,i,true)).join('');
+            // trigger stagger
+            document.querySelectorAll('.stagger-children').forEach(el => el.classList.add('visible'));
+        }
+
         async function initStore() {
+            // Show fallback immediately so sections are never blank
+            showFallback();
             try {
                 // Fetch settings limit
                 let limit = 3;
@@ -642,22 +663,27 @@
                 const snapshot = await db.collection('products').get();
                 const products = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
-                if (products.length === 0) return; // nothing to show
+                if (products.length === 0) return; // keep fallback
 
                 // Sort by latest first
                 products.sort((a, b) => (b.updatedAt?.seconds || 0) - (a.updatedAt?.seconds || 0));
 
-                // Featured: prefer isFeatured=true, fallback to first N products
+                // Featured: prefer isFeatured=true, fallback to first N
                 let featuredItems = products.filter(p => p.isFeatured).slice(0, limit);
                 if (featuredItems.length === 0) featuredItems = products.slice(0, limit);
                 document.getElementById('featuredProductsGrid').innerHTML = featuredItems.map((p, i) => createCard(p, i)).join('');
 
-                // New Arrivals: prefer isNew=true, fallback to next N products
+                // New Arrivals: prefer isNew=true, fallback to first N
                 let newItems = products.filter(p => p.isNew).slice(0, limit);
                 if (newItems.length === 0) newItems = products.slice(0, limit);
                 document.getElementById('newArrivalsGrid').innerHTML = newItems.map((p, i) => createCard(p, i, true)).join('');
+
+                // Trigger stagger animation on real cards
+                document.querySelectorAll('.stagger-children').forEach(el => el.classList.add('visible'));
+
             } catch (error) {
                 console.error("Error loading products:", error);
+                // Keep the fallback already shown
             }
         }
 
