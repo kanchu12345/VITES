@@ -1,0 +1,228 @@
+:root {
+    --brand-1: #1a1a24;
+    --brand-2: #252533;
+    --brand-3: #D4AF37;
+    --brand-4: #C5A059;
+    --brand-5: #E6C875;
+    --brand-6: #0f0f15;
+    --brand-grad: linear-gradient(135deg, #D4AF37, #C5A059, #B98E40);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a0a2e 40%, #0a1a0a 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Rainbow animated background circles */
+.bg-circle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.12;
+    animation: floatCircle 8s ease-in-out infinite;
+}
+
+.bg-circle-1 {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, #D4AF37, transparent);
+    top: -100px;
+    left: -100px;
+    animation-delay: 0s;
+}
+
+.bg-circle-2 {
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, #C5A059, transparent);
+    bottom: -80px;
+    right: -80px;
+    animation-delay: -3s;
+}
+
+.bg-circle-3 {
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, #E6C875, transparent);
+    top: 50%;
+    left: 50%;
+    animation-delay: -6s;
+}
+
+@keyframes floatCircle {
+
+    0%,
+    100% {
+        transform: translateY(0) scale(1)
+    }
+
+    50% {
+        transform: translateY(-20px) scale(1.05)
+    }
+}
+
+.login-wrapper {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 420px;
+    padding: 20px;
+}
+
+.login-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 24px;
+    padding: 45px 40px;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+}
+
+.logo-area {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.logo-area img {
+    height: 70px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+}
+
+.logo-area h2 {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 900;
+    background: var(--brand-grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-size: 1.8rem;
+}
+
+.logo-area p {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.85rem;
+    margin-top: 5px;
+}
+
+.lock-icon {
+    width: 70px;
+    height: 70px;
+    background: var(--brand-grad);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 1.8rem;
+    color: #0a0a0a;
+}
+
+.form-label {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.88rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.form-control {
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    color: white;
+    padding: 13px 18px;
+    font-size: 0.95rem;
+    transition: 0.3s;
+}
+
+.form-control:focus {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 215, 0, 0.6);
+    box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.15);
+    color: white;
+}
+
+.form-control::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+.input-group-text {
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px 0 0 12px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.btn-login {
+    background: var(--brand-grad);
+    color: #0a0a0a;
+    border: none;
+    border-radius: 50px;
+    padding: 14px;
+    font-size: 1rem;
+    font-weight: 700;
+    width: 100%;
+    transition: 0.3s;
+    letter-spacing: 0.5px;
+}
+
+.btn-login:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+    color: #0a0a0a;
+}
+
+.error-msg {
+    background: rgba(255, 50, 50, 0.15);
+    border: 1px solid rgba(255, 50, 50, 0.3);
+    color: #ff8585;
+    border-radius: 10px;
+    padding: 12px 15px;
+    font-size: 0.85rem;
+    margin-bottom: 15px;
+    display: none;
+}
+
+.success-msg {
+    background: rgba(50, 255, 100, 0.15);
+    border: 1px solid rgba(50, 255, 100, 0.3);
+    color: #85ff85;
+    border-radius: 10px;
+    padding: 12px 15px;
+    font-size: 0.85rem;
+    margin-bottom: 15px;
+    display: none;
+}
+
+.back-link {
+    color: rgba(255, 255, 255, 0.5);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: 0.3s;
+}
+
+.back-link:hover {
+    color: var(--brand-3);
+}
+
+/* Password toggle */
+.toggle-pw {
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.5);
+    transition: 0.3s;
+}
+
+.toggle-pw:hover {
+    color: white;
+}
