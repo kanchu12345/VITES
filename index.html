@@ -77,6 +77,38 @@
             <h2>Website is loading... <span id="loading-countdown">5</span>s</h2>
         </div>
     </div>
+    <script>
+        (function() {
+            var preloader = document.getElementById('vites-preloader');
+            var countdownEl = document.getElementById('loading-countdown');
+            var timeLeft = 5;
+
+            var timer = setInterval(function() {
+                timeLeft--;
+                if (countdownEl) countdownEl.innerText = timeLeft;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    if (preloader) {
+                        preloader.style.opacity = '0';
+                        preloader.style.visibility = 'hidden';
+                        setTimeout(function() { preloader.style.display = 'none'; }, 500);
+                        document.body.classList.remove('loading');
+                    }
+                }
+            }, 1000);
+            
+            // Failsafe: hide after 6 seconds maximum regardless of interval
+            setTimeout(function() {
+                if (preloader) {
+                    preloader.style.opacity = '0';
+                    preloader.style.visibility = 'hidden';
+                    setTimeout(function() { preloader.style.display = 'none'; }, 500);
+                    document.body.classList.remove('loading');
+                }
+            }, 6000);
+        })();
+    </script>
 
     <!-- TICKER -->
     <div class="ticker-wrap">
@@ -679,27 +711,7 @@
 
         initStore();
 
-        // Preloader Logic
-        (function() {
-            const preloader = document.getElementById('vites-preloader');
-            const countdownEl = document.getElementById('loading-countdown');
-            let timeLeft = 5;
 
-            const timer = setInterval(() => {
-                timeLeft--;
-                if (countdownEl) countdownEl.innerText = timeLeft;
-                
-                if (timeLeft <= 0) {
-                    clearInterval(timer);
-                    if (preloader) {
-                        preloader.style.opacity = '0';
-                        preloader.style.visibility = 'hidden';
-                        setTimeout(() => preloader.style.display = 'none', 500);
-                        document.body.classList.remove('loading');
-                    }
-                }
-            }, 1000);
-        })();
 
     </script>
 </body>
