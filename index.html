@@ -74,7 +74,7 @@
     <div id="vites-preloader">
         <div class="preloader-content">
             <div class="spinner"></div>
-            <h2>Website is loading...</h2>
+            <h2>Website is loading... <span id="loading-countdown">5</span>s</h2>
         </div>
     </div>
 
@@ -680,15 +680,25 @@
         initStore();
 
         // Preloader Logic
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                const preloader = document.getElementById('vites-preloader');
-                if (preloader) {
-                    preloader.style.opacity = '0';
-                    preloader.style.visibility = 'hidden';
-                    document.body.classList.remove('loading');
+        document.addEventListener('DOMContentLoaded', () => {
+            const preloader = document.getElementById('vites-preloader');
+            const countdownEl = document.getElementById('loading-countdown');
+            let timeLeft = 5;
+
+            const timer = setInterval(() => {
+                timeLeft--;
+                if (countdownEl) countdownEl.innerText = timeLeft;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    if (preloader) {
+                        preloader.style.opacity = '0';
+                        preloader.style.visibility = 'hidden';
+                        setTimeout(() => preloader.style.display = 'none', 500);
+                        document.body.classList.remove('loading');
+                    }
                 }
-            }, 5000); // 5 seconds delay
+            }, 1000);
         });
 
     </script>
