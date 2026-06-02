@@ -16,9 +16,68 @@
         href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&family=Outfit:wght@400;700;900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="css/premium.css">
+    <style>
+        #vites-preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('img/promo.jpg') no-repeat center center/cover;
+            z-index: 999999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        #vites-preloader::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 0;
+        }
+        .preloader-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            color: white;
+            font-family: 'Outfit', sans-serif;
+        }
+        .preloader-content h2 {
+            margin-top: 20px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            border-top: 5px solid #d4af37;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        body.loading {
+            overflow: hidden;
+        }
+    </style>
 </head>
 
-<body>
+<body class="loading">
+    <!-- PRELOADER -->
+    <div id="vites-preloader">
+        <div class="preloader-content">
+            <div class="spinner"></div>
+            <h2>Website is loading...</h2>
+        </div>
+    </div>
+
     <!-- TICKER -->
     <div class="ticker-wrap">
         <span class="ticker-text">✨ Welcome to VITES Clothing! &nbsp;|&nbsp; New Arrivals Every Week! &nbsp;|&nbsp; Men |
@@ -620,16 +679,16 @@
 
         initStore();
 
-        // Show promo modal on load
-        window.addEventListener('DOMContentLoaded', () => {
-            if (!sessionStorage.getItem('promoShown')) {
-                const promoModalElement = document.getElementById('promoModal');
-                if (promoModalElement) {
-                    const promoModal = new bootstrap.Modal(promoModalElement);
-                    promoModal.show();
-                    sessionStorage.setItem('promoShown', 'true');
+        // Preloader Logic
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const preloader = document.getElementById('vites-preloader');
+                if (preloader) {
+                    preloader.style.opacity = '0';
+                    preloader.style.visibility = 'hidden';
+                    document.body.classList.remove('loading');
                 }
-            }
+            }, 2000); // 2 seconds delay
         });
 
     </script>
