@@ -680,7 +680,7 @@
         initStore();
 
         // Preloader Logic
-        document.addEventListener('DOMContentLoaded', () => {
+        (function() {
             const preloader = document.getElementById('vites-preloader');
             const countdownEl = document.getElementById('loading-countdown');
             let timeLeft = 5;
@@ -699,7 +699,7 @@
                     }
                 }
             }, 1000);
-        });
+        })();
 
     </script>
 </body>
