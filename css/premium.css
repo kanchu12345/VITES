@@ -1929,3 +1929,19 @@ footer {
     }
 }
 
+
+/* Lightbox modal styling */
+#lightboxModal {
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(10px);
+}
+#lightboxModal .modal-content {
+    background: transparent !important;
+}
+#lightboxImage {
+    max-height: 85vh;
+    max-width: 100%;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    border: 2px solid rgba(212, 175, 55, 0.3);
+}
+

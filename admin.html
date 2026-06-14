@@ -193,7 +193,7 @@
                                 <h6 class="fw-bold mb-2" style="color:var(--gold);"><i
                                         class="fas fa-gavel me-2"></i>Uploading Rules & Regulations</h6>
                                 <ul style="font-size: 0.82rem; color:var(--muted); margin-bottom: 0;">
-                                    <li><strong>Max File Size:</strong> 32MB per image (High Resolution is OK). <br><span style="color:#D4AF37;">උපරිම ගොනු ප්‍රමාණය: එක් පින්තූරයක් සඳහා 32MB.</span></li>
+                                    <li><strong>Max File Size:</strong> 2MB per image (Max 5 images). <br><span style="color:#D4AF37;">උපරිම ගොනු ප්‍රමාණය: එක් පින්තූරයක් සඳහා 2MB (උපරිම පින්තූර 5).</span></li>
                                     <li><strong>Auto-Delete:</strong> Images stay forever unless you use the "Delete from Host" link in the Edit menu. <br><span style="color:#D4AF37;">ස්වයංක්‍රීයව මැකීම: Edit මෙනුවේ ඇති 'Delete from Host' සබැඳිය භාවිතා කරන්නේ නම් හැර, පින්තූර සදහටම පවතිනු ඇත.</span></li>
                                     <li><strong>Optimization:</strong> For faster site loading, try to keep images under 2MB. <br><span style="color:#D4AF37;">ප්‍රශස්තකරණය: වෙබ් අඩවිය වේගයෙන් පූරණය වීම සඳහා, පින්තූර 2MB ට වඩා අඩුවෙන් තබා ගැනීමට උත්සාහ කරන්න.</span></li>
                                 </ul>
@@ -346,6 +346,7 @@
                                         </div>
                                     </div>
                                     <input type="hidden" id="productImageFinal">
+                                    <input type="hidden" id="productImagesFinal" value="[]">
                                     <input type="hidden" id="sizeChartUrlFinal">
                                 </div>
                             </div>
@@ -643,7 +644,63 @@
             document.getElementById('addFormTitle').textContent = 'Edit Product';
         }
 
-        let isUploading = false;
+        
+        let uploadedImagesList = [];
+        async function handleMultiImageUpload(input) {
+            const files = Array.from(input.files);
+            if (!files.length) return;
+            
+            if (uploadedImagesList.length + files.length > 5) {
+                showToast("Maximum 5 images allowed!");
+                return;
+            }
+
+            isUploading = true;
+            const container = document.getElementById('multiPreviewContainer');
+
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                if (file.size > 2 * 1024 * 1024) {
+                    showToast(file.name + " exceeds 2MB limit!");
+                    continue;
+                }
+
+                showToast("Uploading " + file.name + "...");
+                const formData = new FormData();
+                formData.append('image', file);
+                const apiKey = '580db6f671331120289dba6d8ec108c2';
+
+                try {
+                    const response = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, { method: 'POST', body: formData });
+                    const data = await response.json();
+                    if (data.success) {
+                        uploadedImagesList.push({ url: data.data.url, deleteUrl: data.data.delete_url });
+                        
+                        const imgEl = document.createElement('img');
+                        imgEl.src = data.data.url;
+                        imgEl.style.width = '60px';
+                        imgEl.style.height = '60px';
+                        imgEl.style.objectFit = 'cover';
+                        imgEl.style.borderRadius = '8px';
+                        container.appendChild(imgEl);
+                        
+                        document.getElementById('productImagesFinal').value = JSON.stringify(uploadedImagesList.map(img => img.url));
+                        if(uploadedImagesList.length === 1) {
+                            document.getElementById('productImageFinal').value = data.data.url;
+                        }
+                    } else {
+                        throw new Error(data.error.message);
+                    }
+                } catch (error) {
+                    console.error("Upload error:", error);
+                    showToast("Failed to upload " + file.name);
+                }
+            }
+            isUploading = false;
+            showToast("Uploads complete!");
+        }
+
+let isUploading = false;
         async function handleImageUpload(input, targetHiddenId, previewId) {
             const file = input.files[0];
             if (!file) return;
@@ -709,6 +766,7 @@
                 isNew: document.getElementById('productIsNew').checked,
                 isFeatured: document.getElementById('productIsFeatured').checked,
                 image: document.getElementById('productImageFinal').value || document.getElementById('productImagePath').value || 'img/f1.jpg',
+                images: document.getElementById('productImagesFinal').value ? JSON.parse(document.getElementById('productImagesFinal').value) : [],
                 sizeChartUrl: document.getElementById('sizeChartUrlFinal').value || document.getElementById('sizeChartPath').value || null,
                 imageDeleteUrl: window.lastProductDeleteUrl || null,
                 chartDeleteUrl: window.lastChartDeleteUrl || null,
@@ -738,6 +796,9 @@
             document.getElementById('productIsNew').checked = false;
             document.getElementById('productIsFeatured').checked = false;
             document.getElementById('productImageFinal').value = '';
+            document.getElementById('productImagesFinal').value = '[]';
+            document.getElementById('multiPreviewContainer').innerHTML = '';
+            uploadedImagesList = [];
             document.getElementById('sizeChartUrlFinal').value = '';
             document.getElementById('uploadPreview').style.display = 'none';
             document.getElementById('sizeChartPreview').style.display = 'none';
