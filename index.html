@@ -81,7 +81,7 @@
         (function() {
             var preloader = document.getElementById('vites-preloader');
             var countdownEl = document.getElementById('loading-countdown');
-            var timeLeft = 5;
+            var timeLeft = 1;
 
             var timer = setInterval(function() {
                 timeLeft--;
@@ -153,16 +153,16 @@
                     <img src="img/f1.jpg" class="d-block w-100" alt="VITES Clothing Fashion 1">
                 </div>
                 <div class="carousel-item">
-                    <img src="img/f2.jpg" class="d-block w-100" alt="VITES Clothing Fashion 2">
+                    <img src="img/f2.jpg" class="d-block w-100" alt="VITES Clothing Fashion 2" loading="lazy">
                 </div>
                 <div class="carousel-item">
-                    <img src="img/f3.jpg" class="d-block w-100" alt="VITES Clothing Fashion 3">
+                    <img src="img/f3.jpg" class="d-block w-100" alt="VITES Clothing Fashion 3" loading="lazy">
                 </div>
                 <div class="carousel-item">
-                    <img src="img/f4.jpg" class="d-block w-100" alt="VITES Clothing Fashion 4">
+                    <img src="img/f4.jpg" class="d-block w-100" alt="VITES Clothing Fashion 4" loading="lazy">
                 </div>
                 <div class="carousel-item">
-                    <img src="img/f5.jpg" class="d-block w-100" alt="VITES Clothing Fashion 5">
+                    <img src="img/f5.jpg" class="d-block w-100" alt="VITES Clothing Fashion 5" loading="lazy">
                 </div>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
@@ -249,7 +249,7 @@
             <div class="row g-4">
                 <div class="col-md-4">
                     <a href="products.html?cat=men" class="category-card men-card">
-                        <img src="img/men.jpg" alt="Men's Collection">
+                        <img src="img/men.jpg" alt="Men's Collection" loading="lazy">
                         <div class="cat-arrow"><i class="fas fa-arrow-right"></i></div>
                         <div class="cat-overlay-men">
                             <div class="cat-badge men">MEN</div>
@@ -260,7 +260,7 @@
                 </div>
                 <div class="col-md-4">
                     <a href="products.html?cat=women" class="category-card women-card">
-                        <img src="img/woman-choosing-orange-striped-dress.jpg" alt="Women's Collection">
+                        <img src="img/woman-choosing-orange-striped-dress.jpg" alt="Women's Collection" loading="lazy">
                         <div class="cat-arrow"><i class="fas fa-arrow-right"></i></div>
                         <div class="cat-overlay-women">
                             <div class="cat-badge women">WOMEN</div>
@@ -271,7 +271,7 @@
                 </div>
                 <div class="col-md-4">
                     <a href="products.html?cat=kids" class="category-card kids-card">
-                        <img src="img/kids.jpg" alt="Kids Collection">
+                        <img src="img/kids.jpg" alt="Kids Collection" loading="lazy">
                         <div class="cat-arrow"><i class="fas fa-arrow-right"></i></div>
                         <div class="cat-overlay-kids">
                             <div class="cat-badge kids">KIDS</div>
@@ -624,7 +624,7 @@
                 <div class="${cardClass} ${oosClass}">
                     <div class="card-img-wrap">
                         ${isNA ? '<span class="prod-badge new">NEW</span>' : badgeHtml}
-                        <img src="${p.image}" alt="${p.name}" onerror="this.onerror=null; this.src='img/f1.jpg';">
+                        <img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.onerror=null; this.src='img/f1.jpg';">
                     </div>
                     <div class="${infoClass}">
                         <div class="${catClass}">${p.category.toUpperCase()} • ${p.subCategory || ''}</div>

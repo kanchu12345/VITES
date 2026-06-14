@@ -1912,3 +1912,20 @@ footer {
         padding: 0 10px 15px;
     }
 }
+@media (max-width: 768px) {
+    .category-card img {
+        height: 300px !important;
+        max-width: 100%;
+    }
+    .card-img-wrap img {
+        height: 250px !important;
+        max-width: 100%;
+    }
+    #heroCarousel .carousel-item img {
+        height: 60vh !important;
+    }
+    .hero-section {
+        height: 60vh !important;
+    }
+}
+
