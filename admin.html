@@ -193,24 +193,22 @@
                                 <h6 class="fw-bold mb-2" style="color:var(--gold);"><i
                                         class="fas fa-gavel me-2"></i>Uploading Rules & Regulations</h6>
                                 <ul style="font-size: 0.82rem; color:var(--muted); margin-bottom: 0;">
-                                    <li><strong>Max File Size:</strong> 32MB per image (High Resolution is OK).</li>
-                                    <li><strong>Auto-Delete:</strong> Images stay forever unless you use the "Delete
-                                        from Host" link in the Edit menu.</li>
-                                    <li><strong>Optimization:</strong> For faster site loading, try to keep images under
-                                        2MB.</li>
+                                    <li><strong>Max File Size:</strong> 32MB per image (High Resolution is OK). <br><span style="color:#D4AF37;">උපරිම ගොනු ප්‍රමාණය: එක් පින්තූරයක් සඳහා 32MB.</span></li>
+                                    <li><strong>Auto-Delete:</strong> Images stay forever unless you use the "Delete from Host" link in the Edit menu. <br><span style="color:#D4AF37;">ස්වයංක්‍රීයව මැකීම: Edit මෙනුවේ ඇති 'Delete from Host' සබැඳිය භාවිතා කරන්නේ නම් හැර, පින්තූර සදහටම පවතිනු ඇත.</span></li>
+                                    <li><strong>Optimization:</strong> For faster site loading, try to keep images under 2MB. <br><span style="color:#D4AF37;">ප්‍රශස්තකරණය: වෙබ් අඩවිය වේගයෙන් පූරණය වීම සඳහා, පින්තූර 2MB ට වඩා අඩුවෙන් තබා ගැනීමට උත්සාහ කරන්න.</span></li>
                                 </ul>
                             </div>
                             <h5 id="addFormTitle" class="fw-bold mb-4">Add New Product</h5>
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <label class="form-label">Product Name *</label>
-                                    <small class="text-muted d-block mb-2" style="font-size: 0.75rem;">Enter a clear and descriptive name for the product.</small>
+                                    <small class="text-muted d-block mb-2" style="font-size: 0.75rem;">Enter a clear and descriptive name for the product. (නිෂ්පාදනය සඳහා පැහැදිලි සහ විස්තරාත්මක නමක් ඇතුළත් කරන්න.)</small>
                                     <input type="text" class="form-control" id="productName"
                                         placeholder="e.g. Floral Summer Dress" required>
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-label">Category *</label>
-                                    <small class="text-muted d-block mb-2" style="font-size: 0.75rem;">Main section where this product belongs.</small>
+                                    <small class="text-muted d-block mb-2" style="font-size: 0.75rem;">Main section where this product belongs. (මෙම නිෂ්පාදනය අයත් වන ප්‍රධාන කාණ්ඩය.)</small>
                                     <select class="form-select bg-premium text-white border-0" id="productCategory"
                                         onchange="updateSubCategories()" required>
                                         <option value="">Select Category</option>
@@ -221,7 +219,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-label">Sub-Category *</label>
-                                    <small class="text-muted d-block mb-2" style="font-size: 0.75rem;">Specific clothing type.</small>
+                                    <small class="text-muted d-block mb-2" style="font-size: 0.75rem;">Specific clothing type. (නිශ්චිත ඇඳුම් වර්ගය.)</small>
                                     <select class="form-select bg-premium text-white border-0" id="productSubCategory"
                                         required>
                                         <option value="">Select Sub-Category</option>
@@ -229,13 +227,13 @@
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-label">Price (LKR) *</label>
-                                    <small class="text-muted d-block mb-2" style="font-size: 0.75rem;">Set the selling price in LKR.</small>
+                                    <small class="text-muted d-block mb-2" style="font-size: 0.75rem;">Set the selling price in LKR. (විකුණුම් මිල රුපියල් (LKR) වලින් සකසන්න.)</small>
                                     <input type="number" class="form-control" id="productPrice" placeholder="e.g. 3500"
                                         min="0" required>
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-label">Badge Label</label>
-                                    <small class="text-muted d-block mb-2" style="font-size: 0.75rem;">Highlight with a special badge.</small>
+                                    <small class="text-muted d-block mb-2" style="font-size: 0.75rem;">Highlight with a special badge. (විශේෂ ලාංඡනයක් මගින් අවධාරණය කරන්න.)</small>
                                     <select class="form-select bg-premium text-white border-0" id="productBadge"
                                         onchange="syncBadges(this.value)">
                                         <option value="">No Badge</option>
@@ -247,7 +245,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-label">Stock Status</label>
-                                    <small class="text-muted d-block mb-2" style="font-size: 0.75rem;">Is this item available?</small>
+                                    <small class="text-muted d-block mb-2" style="font-size: 0.75rem;">Is this item available? (මෙම අයිතමය දැනට ලබා ගත හැකිද?)</small>
                                     <select class="form-select bg-premium text-white border-0" id="productStatus">
                                         <option value="In Stock">In Stock ✅</option>
                                         <option value="Out of Stock">Out of Stock ❌</option>
@@ -272,7 +270,7 @@
                                 </div>
                                 <div class="col-md-12">
                                     <label class="form-label">Available Sizes</label>
-                                    <small class="text-muted d-block mb-2" style="font-size: 0.75rem;">Check all sizes that are currently in stock for this product.</small>
+                                    <small class="text-muted d-block mb-2" style="font-size: 0.75rem;">Check all sizes that are currently in stock for this product. (මෙම නිෂ්පාදනය සඳහා දැනට තොගයේ ඇති සියලුම ප්‍රමාණ තෝරන්න.)</small>
                                     <div class="d-flex flex-wrap gap-2">
                                         <div class="form-check">
                                             <input class="form-check-input size-check" type="checkbox" value="S"
