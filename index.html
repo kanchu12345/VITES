@@ -594,7 +594,17 @@
                 <div class="${cardClass} ${oosClass}">
                     <div class="card-img-wrap">
                         ${isNA ? '<span class="prod-badge new">NEW</span>' : badgeHtml}
-                        <img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.onerror=null; this.src='img/f1.jpg';">
+                        ${
+                            p.images && p.images.length > 1 
+                            ? `<div id="c${p.id || Math.random().toString(36).substr(2,9)}${isNA?'-na':''}" class="carousel slide carousel-fade h-100 w-100" data-bs-ride="carousel" data-bs-interval="2500" data-bs-pause="false">
+                                 <div class="carousel-inner h-100 w-100">
+                                     ${p.images.map((imgUrl, idx) => 
+                                        `<div class="carousel-item h-100 w-100 ${idx===0?'active':''}"><img src="${imgUrl}" loading="lazy" alt="${p.name}" onclick="openLightbox('${imgUrl}')" style="cursor:zoom-in; object-fit:cover; width:100%; height:100%;" onerror="this.onerror=null; this.src='img/f1.jpg';"></div>`
+                                     ).join('')}
+                                 </div>
+                               </div>`
+                            : `<img src="${p.images && p.images.length ? p.images[0] : (p.image || 'img/f1.jpg')}" alt="${p.name}" loading="lazy" onclick="openLightbox('${p.images && p.images.length ? p.images[0] : (p.image || 'img/f1.jpg')}')" style="cursor:zoom-in;" onerror="this.onerror=null; this.src='img/f1.jpg';">`
+                        }
                     </div>
                     <div class="${infoClass}">
                         <div class="${catClass}">${p.category.toUpperCase()} • ${p.subCategory || ''}</div>

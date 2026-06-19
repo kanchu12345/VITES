@@ -309,20 +309,20 @@
                                     <div class="row g-2">
                                         <div class="col-12" id="deleteLinksContainer"></div>
                                         <div class="col-md-6">
-                                            <label class="form-label">Product Image <span class="badge bg-success"
+                                            <label class="form-label">Product Images (Max 5) <span class="badge bg-success"
                                                     style="font-size: 0.6rem;">FREE AUTO-HOST</span></label>
                                             <div class="upload-area"
                                                 onclick="document.getElementById('imageUpload').click()">
-                                                <i class="fas fa-magic d-block mb-1"></i>
+                                                <i class="fas fa-images d-block mb-1"></i>
                                                 <p class="mb-1" style="color:var(--muted); font-size:0.88rem;">Click to
-                                                    upload (Free)</p>
+                                                    upload multiple (Free)</p>
                                                 <small
-                                                    style="color:var(--gold); font-size:0.75rem; font-weight: 700;">Max
-                                                    Size: 32MB</small>
+                                                    style="color:var(--gold); font-size:0.75rem; font-weight: 700;">Max Size: 2MB per image</small>
                                             </div>
-                                            <input type="file" id="imageUpload" accept="image/*" class="d-none"
-                                                onchange="handleImageUpload(this, 'productImageFinal', 'uploadPreview')">
-                                            <img id="uploadPreview" class="upload-preview mt-2" alt="Preview">
+                                            <input type="file" id="imageUpload" accept="image/*" multiple class="d-none"
+                                                onchange="handleMultiImageUpload(this)">
+                                            <div id="multiPreviewContainer" class="d-flex flex-wrap gap-2 mt-2"></div>
+                                            <img id="uploadPreview" class="upload-preview mt-2" alt="Preview" style="display:none;">
                                             <input type="text" class="form-control mt-2" id="productImagePath"
                                                 placeholder="Or paste direct image URL">
                                         </div>
